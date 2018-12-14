@@ -1,0 +1,5 @@
+cmake-build-debug/
+.idea/
+data/
+python/descriptor.py
+python/create_features_vector.py
