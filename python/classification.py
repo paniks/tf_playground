@@ -5,7 +5,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report
 from sklearn.preprocessing import scale
 
-from .CONFIG import *
+from python.CONFIG import *
 
 
 def load_data(path=''):
@@ -76,7 +76,7 @@ saver = tf.train.Saver()
 with tf.Session() as sess:
     print('===== training started =====')
     sess.run(initial)
-    writer = tf.summary.FileWriter("./data/writer")
+    writer = tf.summary.FileWriter("./data_priv/writer")
     writer.add_graph(sess.graph)
     merged_summary = tf.summary.merge_all()
 
@@ -89,11 +89,11 @@ with tf.Session() as sess:
             x_batch = train_set[start:end]
             y_batch = train_classes[start:end]
 
-            # feeding training data/examples
+            # feeding training data_priv/examples
             sess.run(train_step, feed_dict={X: x_batch, Y: y_batch, keep_prob: 0.5})
             i += TRAINING_PARAMETERS['batch_size']
 
-        # feeding testing data to determine model accuracy
+        # feeding testing data_priv to determine model accuracy
         y_pred = sess.run(tf.argmax(clf, 1), feed_dict={X: test_set, keep_prob: 1.0})
         y_true = sess.run(tf.argmax(test_classes, 1))
         acc = sess.run(accuracy, feed_dict={X: test_set, Y: test_classes, keep_prob: 1.0})
